@@ -13,11 +13,16 @@ defmodule AdventOfCode.MixProject do
 
   def application do
     [
-      applications: [:logger]
+      applications: applications(Mix.env())
     ]
   end
 
+  defp applications(:dev), do: applications(:all) ++ [:remix]
+  defp applications(_all), do: [:logger]
+
   defp deps do
-    []
+    [
+      {:remix, "~> 0.0.1", only: :dev}
+    ]
   end
 end
