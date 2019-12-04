@@ -1,19 +1,19 @@
 defmodule Aoc.Day01 do
+  @behaviour Advent
   use Aoc.Boilerplate
 
-  def run() do
-    IO.inspect(part1())
-    IO.inspect(part2())
+  def setup() do
+    integer_stream()
   end
 
-  def part1() do
-    integer_stream()
+  def p1(input) do
+    input
     |> Stream.map(&required_fuel/1)
     |> Enum.sum()
   end
 
-  def part2() do
-    integer_stream()
+  def p2(input) do
+    input
     |> Stream.map(&exact_fuel/1)
     |> Enum.sum()
   end
