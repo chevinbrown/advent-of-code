@@ -23,14 +23,34 @@ defmodule Aoc.Day04 do
   end
 
   def p2(input) do
+    input
+    |> Enum.reject(&decreasing?/1)
+    |> Enum.filter(&has_double?/1)
+    |> Enum.filter(&adjacent_matching?/1)
+    |> Enum.count()
+  end
+
+  @doc """
+  ## Examples
+    iex> adjacent_matching?([1, 1, 2, 2, 3, 3])
+    true
+    iex> adjacent_matching?([1, 2, 3, 4, 4, 4])
+    false
+    iex> adjacent_matching?([1, 1, 1, 1, 2, 2])
+    true
+  """
+  def adjacent_matching?(num) do
+    num
+    |> Enum.chunk_by(& &1)
+    |> Enum.any?(&match?([_, _], &1))
   end
 
   @doc """
     ## Examples
-        iex> Aoc.Day04.has_double?([1, 1, 1, 1, 1, 1])
+        iex> has_double?([1, 1, 1, 1, 1, 1])
         true
 
-       iex> Aoc.Day04.has_double?([1, 2, 3, 7, 8, 9])
+       iex> has_double?([1, 2, 3, 7, 8, 9])
        false
   """
   def has_double?(password) do
@@ -41,13 +61,13 @@ defmodule Aoc.Day04 do
 
   @doc """
     ## Examples
-        iex> Aoc.Day04.decreasing?([1, 1, 1, 1, 1, 1])
+        iex> decreasing?([1, 1, 1, 1, 1, 1])
         false
 
-       iex> Aoc.Day04.decreasing?([1, 2, 3, 7, 8, 9])
+       iex> decreasing?([1, 2, 3, 7, 8, 9])
        false
 
-       iex> Aoc.Day04.decreasing?([2, 2, 3, 4, 5, 0])
+       iex> decreasing?([2, 2, 3, 4, 5, 0])
        true
   """
   def decreasing?(password) do
