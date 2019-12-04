@@ -4,6 +4,11 @@ defmodule Aoc.Boilerplate do
       def input_file(),
         do: Path.join([Application.app_dir(:aoc, "priv"), "#{module_name()}.in"])
 
+      def read_input() do
+        input_file()
+        |> File.read!()
+      end
+
       def stream_input() do
         input_file()
         |> File.stream!()
@@ -13,11 +18,6 @@ defmodule Aoc.Boilerplate do
         stream_input()
         |> Stream.map(&String.trim(&1))
         |> Stream.map(&String.to_integer(&1))
-      end
-
-      def read_input() do
-        input_file()
-        |> File.read!()
       end
 
       defp module_name() do
