@@ -7,25 +7,18 @@ defmodule Aoc.Day01 do
   end
 
   def p1(input) do
-    perms =
-      for x <- input,
-          y <- input,
-          x + y == 2020,
-          do: {x, y}
-
-    [{x, y} | _] = perms
-    x * y
+    for x <- input,
+        y <- input,
+        x + y == 2020 do
+      x * y
+    end
+    |> List.first()
   end
 
   def p2(input) do
-    perms =
-      for x <- input,
-          y <- input,
-          z <- input,
-          x + y + z == 2020,
-          do: {x, y, z}
-
-    [{x, y, z} | _] = perms
-    x * y * z
+    for x <- input, y <- input, z <- input, x + y + z == 2020 do
+      x * y * z
+    end
+    |> List.first()
   end
 end

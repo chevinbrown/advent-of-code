@@ -1,8 +1,6 @@
 defmodule AocTest do
   use ExUnit.Case
-  doctest Aoc
 
-  test "greets the world" do
-    assert Aoc.hello() == :world
-  end
+  doctest Aoc.Day01, import: true
+  doctest Aoc.Day02, import: true
 end
