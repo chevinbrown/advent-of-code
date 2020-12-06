@@ -14,12 +14,7 @@ defmodule Aoc.Day06 do
   """
   def p1(input) do
     input
-    |> Enum.map(fn group ->
-      group
-      |> Enum.flat_map(&String.graphemes/1)
-      |> Enum.uniq()
-      |> Enum.count()
-    end)
+    |> Enum.map(&all_answers/1)
     |> Enum.sum()
   end
 
@@ -28,12 +23,21 @@ defmodule Aoc.Day06 do
   """
   def p2(input) do
     input
-    |> Enum.map(fn group ->
-      group
-      |> Enum.map(&MapSet.new(String.graphemes(&1)))
-      |> Enum.reduce(&MapSet.intersection/2)
-      |> Enum.count()
-    end)
+    |> Enum.map(&same_answers/1)
     |> Enum.sum()
+  end
+
+  def all_answers(group) do
+    group
+    |> Enum.flat_map(&String.graphemes/1)
+    |> Enum.uniq()
+    |> Enum.count()
+  end
+
+  def same_answers(group) do
+    group
+    |> Enum.map(&MapSet.new(String.graphemes(&1)))
+    |> Enum.reduce(&MapSet.intersection/2)
+    |> Enum.count()
   end
 end
