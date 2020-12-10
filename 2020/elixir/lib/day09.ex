@@ -20,6 +20,13 @@ defmodule Aoc.Day09 do
   end
 
   def p2(input) do
+    invalid_number = p1(input)
+
+    input
+    |> find_contiguous(invalid_number)
+    |> Enum.min_max()
+    |> Tuple.to_list()
+    |> Enum.sum()
   end
 
   def invalid_numbers(chunk) do
@@ -32,5 +39,20 @@ defmodule Aoc.Day09 do
       |> Enum.uniq()
 
     if !Enum.any?(matches), do: max
+  end
+
+  def find_contiguous(integers, target, visited \\ [])
+
+  def find_contiguous([consider | remaining] = list, target, visited) do
+    cond do
+      Enum.sum(visited) + consider == target ->
+        [consider | visited]
+
+      Enum.sum(visited) + consider > target ->
+        find_contiguous((visited |> Enum.drop(-1) |> Enum.reverse()) ++ list, target)
+
+      Enum.sum(visited) + consider < target ->
+        find_contiguous(remaining, target, [consider | visited])
+    end
   end
 end
