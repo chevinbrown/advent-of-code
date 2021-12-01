@@ -11,8 +11,7 @@ defmodule Aoc.Day01 do
   def p1(input) do
     input
     |> Enum.reduce({0, 0}, &count_increase/2)
-    |> Tuple.to_list()
-    |> Enum.at(1)
+    |> elem(1)
   end
 
   def p2(input) do
@@ -20,8 +19,7 @@ defmodule Aoc.Day01 do
     |> Enum.chunk_every(3, 1)
     |> Enum.map(&Enum.sum/1)
     |> Enum.reduce({0, 0}, &count_increase/2)
-    |> Tuple.to_list()
-    |> Enum.at(1)
+    |> elem(1)
   end
 
   defp count_increase(el, {0, 0} = {_, total}), do: {el, total}
