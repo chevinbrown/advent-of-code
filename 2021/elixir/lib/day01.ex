@@ -4,26 +4,27 @@ defmodule Aoc.Day01 do
 
   def setup() do
     read_input()
+    |> String.split()
+    |> Enum.map(&String.to_integer/1)
   end
 
   def p1(input) do
     input
-    |> String.split()
-    |> Enum.map(&String.to_integer/1)
-    |> Enum.reduce({0, 0}, fn el, {prev, total} ->
-      cond do
-        # handle first condition
-        {0, 0} == {prev, total} ->
-          {el, total}
-
-        el > prev ->
-          {el, total + 1}
-
-        true ->
-          {el, total}
-      end
-    end)
+    |> Enum.reduce({0, 0}, &count_increase/2)
     |> Tuple.to_list()
     |> Enum.at(1)
   end
+
+  def p2(input) do
+    input
+    |> Enum.chunk_every(3, 1)
+    |> Enum.map(&Enum.sum/1)
+    |> Enum.reduce({0, 0}, &count_increase/2)
+    |> Tuple.to_list()
+    |> Enum.at(1)
+  end
+
+  defp count_increase(el, {0, 0} = {_, total}), do: {el, total}
+  defp count_increase(el, {prev, total}) when el > prev, do: {el, total + 1}
+  defp count_increase(el, {_, total}), do: {el, total}
 end
