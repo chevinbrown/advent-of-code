@@ -5,19 +5,19 @@ defmodule Aoc.Day02 do
   def setup() do
     read_input()
     |> String.split("\n")
-    |> IO.inspect()
   end
 
   def p1(input) do
-    [x, y] =
-      input
-      |> Enum.reduce([0, 0], &calculate_position/2)
-
-    x * y
+    input
+    |> Enum.reduce([0, 0], &calculate_position/2)
+    |> Enum.product()
   end
 
-  def p2(_) do
-    nil
+  def p2(input) do
+    input
+    |> Enum.reduce([0, 0, 0], &calculate_position_aim/2)
+    |> Enum.take(2)
+    |> Enum.product()
   end
 
   defp calculate_position("forward" <> " " <> distance, [x, y]) do
@@ -30,5 +30,18 @@ defmodule Aoc.Day02 do
 
   defp calculate_position("down" <> " " <> distance, [x, y]) do
     [x, y - String.to_integer(distance)]
+  end
+
+  defp calculate_position_aim("forward" <> " " <> distance, [x, y, t]) do
+    distance = String.to_integer(distance)
+    [x + distance, y + distance * t, t]
+  end
+
+  defp calculate_position_aim("up" <> " " <> distance, [x, y, t]) do
+    [x, y, t - String.to_integer(distance)]
+  end
+
+  defp calculate_position_aim("down" <> " " <> distance, [x, y, t]) do
+    [x, y, t + String.to_integer(distance)]
   end
 end
